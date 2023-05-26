@@ -15,6 +15,17 @@ module.exports = {
     }
   },
 
+  async getSingleThought(req, res) {
+    try {
+      const thoughtId = req.params.id;
+      const thoughts = await Thought.findById(thoughtId);
+      res.json(thoughts);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'User does not exist' });
+    }
+  },
+
   async postThought(req, res) {
     try {
       const userId = req.body.userID;
@@ -35,7 +46,7 @@ module.exports = {
       await user.save();
 
       res.json(thought);
-    } catch {
+    } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Error posting thought" });
     }
@@ -43,7 +54,7 @@ module.exports = {
 
   async deleteThought(req, res) {
     try {
-      const thoughtId = req.body.thoughtId;
+      const thoughtId = req.params.thoughtId;
       console.log(thoughtId);
 
       const thought = await Thought.findByIdAndDelete(thoughtId);
