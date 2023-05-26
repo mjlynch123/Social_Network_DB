@@ -14,7 +14,6 @@ const reactionSchema = new Schema(
         },
         username: {
             type: String,
-            required: true
         },
         createdAt: {
             type: Date,
@@ -34,4 +33,6 @@ function dateFormat(timestamp) {
     return new Date(timestamp).toISOString();
 }
 
-module.exports = reactionSchema;
+const Reaction = mongoose.model('Reaction', reactionSchema);
+
+module.exports = Reaction;

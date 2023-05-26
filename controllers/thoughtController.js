@@ -54,7 +54,7 @@ module.exports = {
 
   async deleteThought(req, res) {
     try {
-      const thoughtId = req.params.thoughtId;
+      const thoughtId = req.params.id;
       console.log(thoughtId);
 
       const thought = await Thought.findByIdAndDelete(thoughtId);
@@ -69,4 +69,26 @@ module.exports = {
       return res.status(500).json({ message: 'Error deleting thought' });
     }
   },
+
+  async updateThought(req, res) {
+    try {
+      const thoughtId = req.params.id;
+      const { thoughtText } = req.body;
+
+      const thought = await Thought.findByIdAndUpdate(
+        thoughtId,
+        { thoughtText },
+        { new: true }
+      );
+
+      if (!thought) {
+        return res.status(404).json({ message: "Thought not found" });
+      }
+
+      res.json(thought);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Failed to update" });
+    }
+  }
 };
