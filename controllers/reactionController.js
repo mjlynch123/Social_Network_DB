@@ -4,14 +4,13 @@ const Reaction = require("../models/Reaction")
 
 module.exports = {
   async getReactions(req, res) {
-    const reaction = await reactionSchema.find();
+    const reaction = await Reaction.find();
 
     res.json(reaction);
   },
 
   async getSingleReaction(req, res) {
     const reactionId = req.params.id;
-
     const reaction = await Reaction.findById(reactionId);
     res.json(reaction);
   },
@@ -19,7 +18,7 @@ module.exports = {
   async postReaction(req, res) {
     try {
       const thoughtId = req.params.id;
-      const { reactionBody, username } = req.body;
+      const { reactionBody } = req.body;
 
       const thought = await Thought.findById(thoughtId);
       console.log(thought);
